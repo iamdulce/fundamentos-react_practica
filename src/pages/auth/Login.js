@@ -52,6 +52,7 @@ function LoginPage() {
                     className="sessionForm-field"
                     onChange={handleChange}
                     value={email}
+                    autofocus
                 />
                 <FormInput
                     type="password"
@@ -61,7 +62,8 @@ function LoginPage() {
                     onChange={handleChange}
                     value={password}
                 />
-                <input type="checkbox" name="rememberUser" />
+                <input label="Remeber me" type="checkbox" name="rememberUser" />
+                <span>Remember me</span>
                 <Button
                     type="submit"
                     $variant="primary"
