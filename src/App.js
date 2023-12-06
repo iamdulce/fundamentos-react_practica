@@ -1,10 +1,12 @@
-import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Login from "./pages/auth/Login/Login";
+//import RequireAuth from "./pages/auth/components/Require.Auth";
 
 function App() {
     return (
-        <div className="App">
-            <div>Test</div>
-        </div>
+        <Routes>
+            <Route path="/login" element={<Login />} />
+        </Routes>
     );
 }
 
