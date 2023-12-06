@@ -1,0 +1,8 @@
+.layout-main {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    margin: 0 auto;
+    max-width: 660px;
+    min-height: calc(100vh - 128px);
+    padding: 0 20px;
+}

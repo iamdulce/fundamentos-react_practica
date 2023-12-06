@@ -1,26 +1,20 @@
-import { logout } from "../../pages/auth/service";
-import { useAuth } from "../../pages/auth/context";
 import { Link } from "react-router-dom";
+import AuthButton from "../../pages/auth/components/AuthButton";
+import logo from "../../assets/logo.svg";
+import "./styles/Header.css";
 
 console.log(logo);
 
 function Header() {
-    const { isLogged, onLogout } = useAuth();
-
-    const handleLogoutClick = async () => {
-        await logout();
-        onLogout();
-    };
-
     return (
-        <header>
+        <header className="header">
             <Link to="/">
                 <div>
-                    <p>Logo</p>
+                    <img src={logo} alt="darth-vader-icon" />
                 </div>
             </Link>
             <nav>
-                <p>Here will go a button</p>
+                <AuthButton className="header-button" />
             </nav>
         </header>
     );

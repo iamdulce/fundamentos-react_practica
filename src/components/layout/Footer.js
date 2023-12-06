@@ -1,5 +1,7 @@
+import "./styles/Footer.css";
+
 function Footer() {
-    return <footer>Made By Dulce</footer>;
+    return <footer className="footer">Made By Dulce</footer>;
 }
 
 export default Footer;

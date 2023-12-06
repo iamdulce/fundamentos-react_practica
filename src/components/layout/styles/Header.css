@@ -1,0 +1,28 @@
+.header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    margin: 0 20px;
+}
+
+.header-button {
+    width: 144px;
+    margin-left: 10px;
+}
+
+.svg-icon {
+    width: 1em;
+    height: 1em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+    fill: #13c1ac;
+}
+
+.svg-icon circle {
+    stroke: #13c1ac;
+    stroke-width: 1;
+}

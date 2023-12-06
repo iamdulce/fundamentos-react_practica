@@ -56,6 +56,7 @@ function LoginPage() {
                     onChange={handleChange}
                     value={password}
                 />
+                <input type="checkbox" name="rememberUser" />
                 <button type="submit">Submit</button>
                 {error && <div>{error.message}</div>}
             </form>
