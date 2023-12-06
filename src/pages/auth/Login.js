@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context";
-import { login } from "../service";
+import { useAuth } from "./context";
+import { login } from "./service";
 import { useState } from "react";
 
 function LoginPage() {
@@ -12,16 +12,14 @@ function LoginPage() {
     });
     const [error, setError] = useState(null);
 
-    const location = useLocation(); // este state es el mismo que se guardó en RequireAuth
+    const location = useLocation();
     const navigate = useNavigate();
 
     const handleSubmit = async event => {
-        event.preventDefault(); //Esto evita que se recargue la pág antes del evento
+        event.preventDefault();
 
-        //gestion de errores
         try {
             await login(credentials);
-            //está logeado
             onLogin();
 
             const to = location?.state?.from.pathname || "/";
@@ -38,8 +36,7 @@ function LoginPage() {
         }));
     };
 
-    const { username, password } = credentials;
-    //const disabled = !(username && password);
+    const { email, password } = credentials;
 
     return (
         <div>
@@ -48,12 +45,14 @@ function LoginPage() {
                 <input
                     type="text"
                     name="email"
+                    placeholder="email"
                     onChange={handleChange}
-                    value={username}
+                    value={email}
                 />
                 <input
                     type="password"
                     name="password"
+                    placeholder="password"
                     onChange={handleChange}
                     value={password}
                 />
