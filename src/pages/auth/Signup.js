@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { signup } from "./service";
+import Button from "../../components/shared/Button";
+import FormInput from "../../components/shared/FormInput";
+import "./styles/SessionPages.css";
 
 function SignupPage() {
     const [credentials, setCredentials] = useState({
@@ -37,39 +40,51 @@ function SignupPage() {
     const { email, password, username, name } = credentials;
 
     return (
-        <div>
-            <h1>Signup</h1>
+        <div className="sessionPage">
+            <h1 className="sessionPage-title">Signup</h1>
             <form onSubmit={handleSubmit}>
-                <input
+                <FormInput
                     type="text"
                     name="email"
-                    placeholder="email"
+                    label="email"
+                    className="sessionForm-field"
                     onChange={handleChange}
                     value={email}
                 />
-                <input
+                <FormInput
                     type="password"
                     name="password"
-                    placeholder="password"
+                    label="password"
+                    className="sessionForm-field"
                     onChange={handleChange}
                     value={password}
                 />
-                <input
+                <FormInput
                     type="text"
                     name="username"
-                    placeholder="username"
+                    label="username"
+                    className="sessionForm-field"
                     onChange={handleChange}
                     value={username}
                 />
-                <input
+                <FormInput
                     type="text"
                     name="name"
-                    placeholder="name"
+                    label="name"
+                    className="sessionForm-field"
                     onChange={handleChange}
                     value={name}
                 />
-                <button type="submit">Submit</button>
-                {error && <div>{error.message}</div>}
+                <Button
+                    type="submit"
+                    $variant="primary"
+                    className="sessionForm-submit"
+                >
+                    Sign up
+                </Button>
+                {error && (
+                    <div className="sessionPage-error">{error.message}</div>
+                )}
             </form>
         </div>
     );

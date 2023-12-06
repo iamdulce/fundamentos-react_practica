@@ -10,7 +10,7 @@ function Header() {
         <header className="header">
             <Link to="/">
                 <div>
-                    <img src={logo} alt="darth-vader-icon" />
+                    <img src={logo} alt="moon-icon" />
                 </div>
             </Link>
             <nav>

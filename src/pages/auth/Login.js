@@ -2,6 +2,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./context";
 import { login } from "./service";
 import { useState } from "react";
+import Button from "../../components/shared/Button";
+import FormInput from "../../components/shared/FormInput";
+import "./styles/SessionPages.css";
 
 function LoginPage() {
     const { onLogin } = useAuth();
@@ -39,26 +42,36 @@ function LoginPage() {
     const { email, password } = credentials;
 
     return (
-        <div>
-            <h1>Login</h1>
+        <div className="sessionPage">
+            <h1 className="sessionPage-title">Log In</h1>
             <form onSubmit={handleSubmit}>
-                <input
+                <FormInput
                     type="text"
                     name="email"
-                    placeholder="email"
+                    label="email"
+                    className="sessionForm-field"
                     onChange={handleChange}
                     value={email}
                 />
-                <input
+                <FormInput
                     type="password"
                     name="password"
-                    placeholder="password"
+                    label="password"
+                    className="sessionForm-field"
                     onChange={handleChange}
                     value={password}
                 />
                 <input type="checkbox" name="rememberUser" />
-                <button type="submit">Submit</button>
-                {error && <div>{error.message}</div>}
+                <Button
+                    type="submit"
+                    $variant="primary"
+                    className="sessionForm-submit"
+                >
+                    Log in
+                </Button>
+                {error && (
+                    <div className="sessionPage-error">{error.message}</div>
+                )}
             </form>
         </div>
     );
