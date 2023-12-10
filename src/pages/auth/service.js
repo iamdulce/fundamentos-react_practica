@@ -8,10 +8,22 @@ export const signup = async credentials => {
     await client.post("/api/auth/signup", credentials);
 };
 
-export const login = async credentials => {
-    const { accessToken } = await client.post("api/auth/login", credentials);
-    setAuthorizationHeader(accessToken); //guardo el token de acceso
-    storage.set("auth", accessToken);
+export const login = async (credentials, rememberUser) => {
+    try {
+        const { accessToken } = await client.post(
+            "api/auth/login",
+            credentials
+        );
+        setAuthorizationHeader(accessToken);
+
+        if (rememberUser) {
+            storage.set("auth", accessToken);
+        }
+
+        return accessToken;
+    } catch (error) {
+        throw error;
+    }
 };
 
 export const logout = async () => {

@@ -2,8 +2,8 @@ import client from "../../api/client";
 
 const advertsURL = "/api/v1/adverts";
 
-export const getAdverts = async (type, selectedTag) => {
-    const queryString = `?type=${type}&tag=${selectedTag}`;
+export const getAdverts = async selectedTag => {
+    const queryString = `?&tags=${selectedTag}`;
 
     try {
         const response = await client.get(`${advertsURL}${queryString}`);

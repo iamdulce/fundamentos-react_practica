@@ -8,7 +8,6 @@ import "./styles/AdvertsPage.css";
 const AdvertsPage = () => {
     const [adverts, setAdverts] = useState([]);
     const [tags, setTags] = useState([]);
-    const [type, setType] = useState("");
     const [selectedTag, setSelectedTag] = useState("");
 
     useEffect(() => {
@@ -22,21 +21,11 @@ const AdvertsPage = () => {
     }, []);
 
     useEffect(() => {
-        console.log(
-            "Fetching adverts with type:",
-            type,
-            "and tag:",
-            selectedTag
-        );
-        getAdverts(type, selectedTag)
-            .then(adverts => setAdverts(adverts))
+        console.log("Fetching adverts with tag", selectedTag);
+        getAdverts(selectedTag)
+            .then(adverts => setAdverts(adverts || []))
             .catch(err => console.error(err));
-    }, [type, selectedTag]);
-
-    const filterByType = event => {
-        const typeFromEvent = event.target.value;
-        setType(typeFromEvent);
-    };
+    }, [selectedTag]);
 
     const filterByTag = event => {
         const tagFromEvent = event.target.value;
@@ -46,19 +35,6 @@ const AdvertsPage = () => {
     return (
         <Layout title="Latest adds">
             <div className="advertsFilters">
-                <label htmlFor="select-type">
-                    Filter by type
-                    <select
-                        id="select-type"
-                        name="select-type"
-                        onChange={filterByType}
-                    >
-                        <option value="">All</option>
-                        <option value="buy">Buy</option>
-                        <option value="sell">Sell</option>
-                    </select>
-                </label>
-
                 <label htmlFor="select-tag">
                     Filter by Tag
                     <select
@@ -66,7 +42,6 @@ const AdvertsPage = () => {
                         name="select-tag"
                         onChange={filterByTag}
                     >
-                        <option value="">All</option>
                         {tags.map(tag => {
                             return (
                                 <option key={`option-${tag}`} value={tag}>

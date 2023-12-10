@@ -24,7 +24,7 @@ function LoginPage() {
         event.preventDefault();
 
         try {
-            await login(credentials);
+            await login(credentials, rememberUser);
             onLogin();
 
             const to = location?.state?.from.pathname || "/";
@@ -41,6 +41,7 @@ function LoginPage() {
         }));
     };
 
+    const [rememberUser, setRememberUser] = useState(false);
     const { email, password } = credentials;
 
     return (
@@ -69,6 +70,8 @@ function LoginPage() {
                         label="Remeber me"
                         type="checkbox"
                         name="rememberUser"
+                        checked={rememberUser}
+                        onChange={() => setRememberUser(!rememberUser)}
                     />
                     <span>Remember me</span>
                     <Button
