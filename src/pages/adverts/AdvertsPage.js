@@ -3,6 +3,7 @@ import Layout from "../../components/layout/Layout";
 import { getAdverts } from "./service";
 import Button from "../../components/shared/Button";
 import { Link } from "react-router-dom";
+import "./styles/AdvertsPage.css";
 
 const AdvertsPage = () => {
     const [adverts, setAdverts] = useState([]);
@@ -15,52 +16,32 @@ const AdvertsPage = () => {
         fetchAdverts();
     }, []);
 
-    const defaultImageURL = "../assets/no-img.jpeg";
-
     return (
         <Layout title="Latest adds">
             <div className="advertsPage">
                 {adverts.length ? (
-                    <ul>
+                    <ul className="advertsList">
                         {adverts.map(advert => (
-                            <li
-                                key={advert.id}
-                                style={{
-                                    listStyle: "none",
-                                    border: "1px solid red",
-                                }}
-                            >
+                            <li className="advertItem" key={advert.id}>
                                 <Link to={"/adverts/" + advert.id}>
                                     {advert.name}
-                                    <b>
-                                        <br />
-                                        buy or sell:
-                                    </b>
-                                    {advert.sale ? "buying" : "selling"}
-                                    <b>
-                                        <br />
-                                        tags:
-                                    </b>
+                                    <br />
+                                    <b>buy or sell:</b>
+                                    {advert.sale ? " buying" : " selling"}
+                                    <br />
+                                    <b>tags:</b>
                                     {advert.tags.map((tag, index) => (
                                         <span key={index}> {tag} </span>
                                     ))}
-                                    <b>
-                                        <br />
-                                        price:
-                                    </b>
-                                    {advert.price}€
                                     <br />
-                                    <img
-                                        src={advert.photo || defaultImageURL}
-                                        alt="advertisement product"
-                                        width="200"
-                                    />
+                                    <b>price: </b>
+                                    {advert.price}€
                                 </Link>
                             </li>
                         ))}
                     </ul>
                 ) : (
-                    <Button variant="primary">Upload your add!</Button>
+                    <Button $variant="primary">Upload your add!</Button>
                 )}
             </div>
         </Layout>

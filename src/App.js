@@ -5,6 +5,7 @@ import AdvertsPage from "./pages/adverts/AdvertsPage";
 import NotFound from "./pages/NotFound";
 import RequireAuth from "./pages/auth/components/Require.Auth";
 import NewAdvertPage from "./pages/adverts/NewAdvertPage";
+import AdvertPage from "./pages/adverts/AdvertPage";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/adverts" element={<AdvertsPage />} />
+            <Route path="/adverts/:advertId" element={<AdvertPage />} />
             <Route
                 path="/adverts/new"
                 element={

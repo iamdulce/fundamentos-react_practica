@@ -1,0 +1,26 @@
+.advertsList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 0;
+    overflow: hidden;
+    gap: 20px;
+}
+
+.advertItem {
+    list-style: none;
+    max-width: 250px;
+    width: 100%;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d1dbe0;
+    height: 120px;
+    padding: 10px;
+    line-height: 1.6;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.advertItem > a {
+    text-decoration: none;
+}
