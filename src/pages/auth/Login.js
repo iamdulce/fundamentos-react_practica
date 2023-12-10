@@ -5,6 +5,8 @@ import { useState } from "react";
 import Button from "../../components/shared/Button";
 import FormInput from "../../components/shared/FormInput";
 import "./styles/SessionPages.css";
+import { NavLink } from "react-router-dom";
+import Layout from "../../components/layout/Layout";
 
 function LoginPage() {
     const { onLogin } = useAuth();
@@ -42,40 +44,51 @@ function LoginPage() {
     const { email, password } = credentials;
 
     return (
-        <div className="sessionPage">
-            <h1 className="sessionPage-title">Log In</h1>
-            <form onSubmit={handleSubmit}>
-                <FormInput
-                    type="text"
-                    name="email"
-                    label="email"
-                    className="sessionForm-field"
-                    onChange={handleChange}
-                    value={email}
-                    autofocus
-                />
-                <FormInput
-                    type="password"
-                    name="password"
-                    label="password"
-                    className="sessionForm-field"
-                    onChange={handleChange}
-                    value={password}
-                />
-                <input label="Remeber me" type="checkbox" name="rememberUser" />
-                <span>Remember me</span>
-                <Button
-                    type="submit"
-                    $variant="primary"
-                    className="sessionForm-submit"
-                >
-                    Log in
-                </Button>
-                {error && (
-                    <div className="sessionPage-error">{error.message}</div>
-                )}
-            </form>
-        </div>
+        <Layout>
+            <div className="sessionPage">
+                <h1 className="sessionPage-title">Log In</h1>
+                <form onSubmit={handleSubmit}>
+                    <FormInput
+                        type="text"
+                        name="email"
+                        label="email"
+                        className="sessionForm-field"
+                        onChange={handleChange}
+                        value={email}
+                        autofocus
+                    />
+                    <FormInput
+                        type="password"
+                        name="password"
+                        label="password"
+                        className="sessionForm-field"
+                        onChange={handleChange}
+                        value={password}
+                    />
+                    <input
+                        label="Remeber me"
+                        type="checkbox"
+                        name="rememberUser"
+                    />
+                    <span>Remember me</span>
+                    <Button
+                        type="submit"
+                        $variant="primary"
+                        className="sessionForm-submit"
+                    >
+                        Log in
+                    </Button>
+                    {error && (
+                        <div className="sessionPage-error">{error.message}</div>
+                    )}
+                </form>
+                <br />
+                <div>
+                    Don't have an account?
+                    <NavLink to="/signup"> Create one here!</NavLink>
+                </div>
+            </div>
+        </Layout>
     );
 }
 

@@ -17,10 +17,10 @@ function Header() {
             </Link>
             <nav className="header-nav">
                 <NavLink to="/adverts/new" className={navItemClassName}>
-                    Create add
+                    Create ad
                 </NavLink>
                 <NavLink to="/adverts" end className={navItemClassName}>
-                    See all adds
+                    See all ads
                 </NavLink>
                 <AuthButton className="header-button" />
             </nav>

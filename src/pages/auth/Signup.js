@@ -4,6 +4,7 @@ import { signup } from "./service";
 import Button from "../../components/shared/Button";
 import FormInput from "../../components/shared/FormInput";
 import "./styles/SessionPages.css";
+import Layout from "../../components/layout/Layout";
 
 function SignupPage() {
     const [credentials, setCredentials] = useState({
@@ -40,60 +41,56 @@ function SignupPage() {
     const { email, password, username, name } = credentials;
 
     return (
-        <div className="sessionPage">
-            <h1 className="sessionPage-title">Signup</h1>
-            <form onSubmit={handleSubmit}>
-                <FormInput
-                    type="text"
-                    name="email"
-                    label="email"
-                    className="sessionForm-field"
-                    onChange={handleChange}
-                    value={email}
-                />
-                <FormInput
-                    type="password"
-                    name="password"
-                    label="password"
-                    className="sessionForm-field"
-                    onChange={handleChange}
-                    value={password}
-                />
-                <FormInput
-                    type="text"
-                    name="username"
-                    label="username"
-                    className="sessionForm-field"
-                    onChange={handleChange}
-                    value={username}
-                />
-                <FormInput
-                    type="text"
-                    name="name"
-                    label="name"
-                    className="sessionForm-field"
-                    onChange={handleChange}
-                    value={name}
-                />
-                <Button
-                    type="submit"
-                    $variant="primary"
-                    className="sessionForm-submit"
-                >
-                    Sign up
-                </Button>
-                {error && (
-                    <div className="sessionPage-error">{error.message}</div>
-                )}
-            </form>
-        </div>
+        <Layout>
+            <div className="sessionPage">
+                <h1 className="sessionPage-title">Signup</h1>
+                <form onSubmit={handleSubmit}>
+                    <FormInput
+                        type="text"
+                        name="email"
+                        label="email"
+                        className="sessionForm-field"
+                        onChange={handleChange}
+                        value={email}
+                    />
+                    <FormInput
+                        type="password"
+                        name="password"
+                        label="password"
+                        className="sessionForm-field"
+                        onChange={handleChange}
+                        value={password}
+                    />
+                    <FormInput
+                        type="text"
+                        name="username"
+                        label="username"
+                        className="sessionForm-field"
+                        onChange={handleChange}
+                        value={username}
+                    />
+                    <FormInput
+                        type="text"
+                        name="name"
+                        label="name"
+                        className="sessionForm-field"
+                        onChange={handleChange}
+                        value={name}
+                    />
+                    <Button
+                        type="submit"
+                        $variant="primary"
+                        className="sessionForm-submit"
+                    >
+                        Sign up
+                    </Button>
+                    {error && (
+                        <div className="sessionPage-error">{error.message}</div>
+                    )}
+                </form>
+            </div>
+        </Layout>
     );
 }
 
 export default SignupPage;
-
-// Data:
-// dulce@kc.com
-// 12345
-// dulcekc
-// dulcekc

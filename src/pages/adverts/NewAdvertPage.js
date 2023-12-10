@@ -66,7 +66,7 @@ function NewAdvertPage() {
 
             navigate("/adverts/" + advert.id);
         } catch (error) {
-            console.error("Error creating the add: ", error);
+            console.error("Error creating the ad: ", error);
         }
     };
 
@@ -108,7 +108,7 @@ function NewAdvertPage() {
                                 checked={sale === true}
                                 onChange={handleSaleChange}
                             />
-                            To sell
+                            To Buy
                         </label>
                         <label>
                             <input
@@ -118,7 +118,7 @@ function NewAdvertPage() {
                                 checked={sale === false}
                                 onChange={handleSaleChange}
                             />
-                            To Buy
+                            To Sell
                         </label>
                     </div>
                     <br />
@@ -153,7 +153,7 @@ function NewAdvertPage() {
                     <br />
 
                     <Button $variant="primary" type="submit">
-                        Create add
+                        Create ad
                     </Button>
                 </form>
             </div>

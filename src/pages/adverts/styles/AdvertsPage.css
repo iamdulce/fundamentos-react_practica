@@ -26,3 +26,7 @@
     text-decoration: none;
     width: 100%;
 }
+
+.advertsFilters > label {
+    margin-right: 10px;
+}

@@ -58,7 +58,7 @@ const AdvertPage = () => {
                 </div>
                 <div className="advertDeleteBtn">
                     <Button $variant="primary" onClick={handleDeleteAdd}>
-                        Delete add
+                        Delete ad
                     </Button>
                 </div>
             </div>
