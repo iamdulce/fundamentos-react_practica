@@ -1,7 +1,9 @@
 import Layout from "../../components/layout/Layout";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getAdvertDetail } from "./service";
+import { getAdvertDetail, deleteAdvert } from "./service";
+import Button from "../../components/shared/Button";
+import "./styles/AdvertPage.css";
 
 const AdvertPage = () => {
     const navigate = useNavigate();
@@ -20,29 +22,45 @@ const AdvertPage = () => {
             });
     }, [navigate, params.advertId]);
 
+    async function handleDeleteAdd() {
+        try {
+            await deleteAdvert(params.advertId);
+            navigate("/adverts");
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     return (
-        <Layout title="Product details">
-            <div>
-                {advert && (
-                    <div>
-                        <img
-                            src={advert.photo}
-                            alt={advert.name}
-                            width={200}
-                            height={200}
-                        />
-                        <br />
-                        <h3>{advert.name}</h3>
-                        <b>price:</b> {advert.price}€<br />
-                        <b>buy or sell:</b> {advert.sale ? "buying" : "selling"}
-                        <br />
-                        <b>tags:</b>
-                        {advert.tags.map((tag, index) => (
-                            <span key={index}> {tag} </span>
-                        ))}
-                        <br />
-                    </div>
-                )}
+        <Layout title="Advert details">
+            <div className="advertContainer">
+                <div className="advertDetail">
+                    {advert && (
+                        <div>
+                            <img
+                                src={advert.photo}
+                                alt={advert.name}
+                                width={400}
+                            />
+                            <br />
+                            <h3>{advert.name}</h3>
+                            <b>price:</b> {advert.price}€<br />
+                            <b>buy or sell:</b>{" "}
+                            {advert.sale ? "buying" : "selling"}
+                            <br />
+                            <b>tags:</b>
+                            {advert.tags.map((tag, index) => (
+                                <span key={index}> {tag} </span>
+                            ))}
+                            <br />
+                        </div>
+                    )}
+                </div>
+                <div className="advertDeleteBtn">
+                    <Button $variant="primary" onClick={handleDeleteAdd}>
+                        Delete add
+                    </Button>
+                </div>
             </div>
         </Layout>
     );

@@ -11,7 +11,17 @@ export const getAdvertDetail = advertId => {
     return client.get(url);
 };
 
+export const deleteAdvert = advertId => {
+    const url = `${advertsURL}/${advertId}`;
+    return client.delete(url);
+};
+
 export const createAdvert = advert => {
     const url = advertsURL;
     return client.post(url, advert);
+};
+
+export const getTags = () => {
+    const url = `${advertsURL}/tags`;
+    return client.get(url);
 };
