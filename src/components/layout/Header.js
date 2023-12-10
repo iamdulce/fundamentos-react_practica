@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import AuthButton from "../../pages/auth/components/AuthButton";
 import logo from "../../assets/logo.svg";
 import "./styles/Header.css";
+import clsx from "clsx";
 
-console.log(logo);
+const navItemClassName = ({ isActive }) =>
+    clsx("header-nav_item", { active: isActive });
 
 function Header() {
     return (
@@ -13,7 +15,13 @@ function Header() {
                     <img src={logo} alt="moon-icon" />
                 </div>
             </Link>
-            <nav>
+            <nav className="header-nav">
+                <NavLink to="/adverts/new" className={navItemClassName}>
+                    Create add
+                </NavLink>
+                <NavLink to="/adverts" end className={navItemClassName}>
+                    See all adds
+                </NavLink>
                 <AuthButton className="header-button" />
             </nav>
         </header>

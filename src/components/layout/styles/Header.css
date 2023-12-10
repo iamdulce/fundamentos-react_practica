@@ -2,11 +2,23 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    height: 60px;
-    margin: 0 20px;
+    height: 80px;
+    padding: 0 20px;
+    border-bottom: 1px solid;
+    border-color: #d1dbe0;
 }
 
 .header-button {
     width: 144px;
     margin-left: 10px;
+}
+
+.header-nav .active {
+    color: rgba(19, 193, 172, 1);
+}
+
+.header-nav .header-nav_item {
+    align-self: center;
+    margin-right: 16px;
+    text-decoration: none;
 }
