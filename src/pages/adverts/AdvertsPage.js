@@ -8,68 +8,83 @@ import "./styles/AdvertsPage.css";
 const AdvertsPage = () => {
     const [adverts, setAdverts] = useState([]);
     const [tags, setTags] = useState([]);
-    const [selectedTag, setSelectedTag] = useState("");
+    const [selectedTag, setSelectedTag] = useState(null);
+    const [filteredAdverts, setFilteredAdverts] = useState([]);
 
     useEffect(() => {
-        getTags()
-            .then(tags =>
-                setTags(() => {
-                    return tags;
-                })
-            )
-            .catch(err => console.error(err));
+        const fetchAdvertsAndTags = async () => {
+            const fetchedAdverts = await getAdverts();
+            const fetchedTags = await getTags();
+            setAdverts(fetchedAdverts);
+            setTags(fetchedTags);
+
+            setFilteredAdverts(fetchedAdverts);
+        };
+        fetchAdvertsAndTags();
     }, []);
 
-    useEffect(() => {
-        console.log("Fetching adverts with tag", selectedTag);
-        getAdverts(selectedTag)
-            .then(adverts => setAdverts(adverts || []))
-            .catch(err => console.error(err));
-    }, [selectedTag]);
+    const handleTagChange = event => {
+        setSelectedTag(event.target.value);
+    };
 
-    const filterByTag = event => {
-        const tagFromEvent = event.target.value;
-        setSelectedTag(tagFromEvent);
+    const handleFilterClick = () => {
+        const newFilteredAdverts = selectedTag
+            ? adverts.filter(advert => advert.tags.includes(selectedTag))
+            : adverts;
+        setFilteredAdverts(newFilteredAdverts);
+    };
+
+    const handleClearFilterClick = () => {
+        setSelectedTag(null);
+        setFilteredAdverts(adverts);
     };
 
     return (
         <Layout title="Latest adds">
-            <div className="advertsFilters">
-                <label htmlFor="select-tag">
-                    Filter by Tag
-                    <select
-                        id="select-tag"
-                        name="select-tag"
-                        onChange={filterByTag}
-                    >
-                        {tags.map(tag => {
-                            return (
-                                <option key={`option-${tag}`} value={tag}>
-                                    {tag}
-                                </option>
-                            );
-                        })}
-                    </select>
-                </label>
-            </div>
             <div className="advertsPage">
-                {adverts.length ? (
+                <div className="advertsFilters">
+                    <strong>Filter by Tag:</strong>{" "}
+                    {tags.map((tag, index) => (
+                        <label key={index}>
+                            <input
+                                type="radio"
+                                name="tagFilter"
+                                value={tag}
+                                checked={selectedTag === tag}
+                                onChange={handleTagChange}
+                            />
+                            {tag}
+                        </label>
+                    ))}
+                    <button onClick={handleFilterClick}>Filter</button>
+                    <button onClick={handleClearFilterClick}>
+                        Clear Filter
+                    </button>
+                </div>
+                {filteredAdverts.length ? (
                     <ul className="advertsList">
-                        {adverts.map(advert => (
-                            <li className="advertItem" key={advert.id}>
+                        {filteredAdverts.map(advert => (
+                            <li key={advert.id} className="advertItem">
                                 <Link to={"/adverts/" + advert.id}>
                                     {advert.name}
-                                    <br />
-                                    <b>buy or sell:</b>
-                                    {advert.sale ? " buying" : " selling"}
-                                    <br />
-                                    <b>tags:</b>
+                                    <b>
+                                        <br />
+                                        buy or sell:
+                                    </b>
+                                    {advert.sale ? "buying" : "selling"}
+                                    <b>
+                                        <br />
+                                        tags:
+                                    </b>
                                     {advert.tags.map((tag, index) => (
                                         <span key={index}> {tag} </span>
                                     ))}
-                                    <br />
-                                    <b>price: </b>
+                                    <b>
+                                        <br />
+                                        price:
+                                    </b>
                                     {advert.price}€
+                                    <br />
                                 </Link>
                             </li>
                         ))}

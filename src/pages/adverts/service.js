@@ -2,16 +2,13 @@ import client from "../../api/client";
 
 const advertsURL = "/api/v1/adverts";
 
-export const getAdverts = async selectedTag => {
-    const queryString = `?&tags=${selectedTag}`;
+export const getTags = () => {
+    const url = `${advertsURL}/tags`;
+    return client.get(url);
+};
 
-    try {
-        const response = await client.get(`${advertsURL}${queryString}`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching adverts:", error);
-        throw error;
-    }
+export const getAdverts = () => {
+    return client.get(advertsURL);
 };
 
 export const getAdvertDetail = advertId => {
@@ -27,9 +24,4 @@ export const deleteAdvert = advertId => {
 export const createAdvert = advert => {
     const url = advertsURL;
     return client.post(url, advert);
-};
-
-export const getTags = () => {
-    const url = `${advertsURL}/tags`;
-    return client.get(url);
 };
