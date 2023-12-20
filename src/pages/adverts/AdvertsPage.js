@@ -5,37 +5,71 @@ import Button from "../../components/shared/Button";
 import { Link } from "react-router-dom";
 import "./styles/AdvertsPage.css";
 
+import { useLocation, useNavigate } from "react-router-dom";
+
 const AdvertsPage = () => {
     const [adverts, setAdverts] = useState([]);
     const [tags, setTags] = useState([]);
     const [selectedTag, setSelectedTag] = useState(null);
+    const [selectedSale, setSelectedSale] = useState(null);
     const [filteredAdverts, setFilteredAdverts] = useState([]);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchAdvertsAndTags = async () => {
-            const fetchedAdverts = await getAdverts();
+        const fetchAdvertsAndFilters = async () => {
+            const queryParams = new URLSearchParams(location.search);
+            const tagFromQuery = queryParams.get("tags");
+            const saleFromQuery = queryParams.get("sale");
+            const fetchedAdverts = await getAdverts({ tags: tagFromQuery });
             const fetchedTags = await getTags();
             setAdverts(fetchedAdverts);
             setTags(fetchedTags);
-
+            setSelectedTag(tagFromQuery);
+            setSelectedSale(saleFromQuery);
             setFilteredAdverts(fetchedAdverts);
         };
-        fetchAdvertsAndTags();
-    }, []);
+        fetchAdvertsAndFilters();
+    }, [location.search]);
 
     const handleTagChange = event => {
         setSelectedTag(event.target.value);
     };
 
-    const handleFilterClick = () => {
-        const newFilteredAdverts = selectedTag
-            ? adverts.filter(advert => advert.tags.includes(selectedTag))
-            : adverts;
+    const handleSaleChange = event => {
+        const newValue = event.target.checked ? event.target.value : null;
+        setSelectedSale(newValue);
+    };
+
+    const handleFilterSubmit = () => {
+        const queryParams = {};
+        if (selectedTag) {
+            queryParams.tags = selectedTag;
+        }
+
+        if (selectedSale !== null) {
+            queryParams.sale = selectedSale;
+        }
+
+        // Se actualiza la URL con la nueva query de filtrado
+        const queryString = new URLSearchParams(queryParams).toString();
+        navigate(`/adverts?${queryString}`);
+
+        // Filtrar anuncios basados en 'tags' y 'sale'
+        const newFilteredAdverts = adverts.filter(
+            advert =>
+                (!selectedTag || advert.tags.includes(selectedTag)) && // Filtrar por 'tags'
+                (selectedSale === null || advert.sale === selectedSale) // Filtrar por 'sale'
+        );
         setFilteredAdverts(newFilteredAdverts);
     };
 
-    const handleClearFilterClick = () => {
+    const handleClearFilterSubmit = () => {
+        // Se limpia la query de filtrado en la URL
+        navigate("/adverts");
+
         setSelectedTag(null);
+        setSelectedSale(null);
         setFilteredAdverts(adverts);
     };
 
@@ -56,9 +90,30 @@ const AdvertsPage = () => {
                             {tag}
                         </label>
                     ))}
-                    <button onClick={handleFilterClick}>Filter</button>
-                    <button onClick={handleClearFilterClick}>
-                        Clear Filter
+                    <br />
+                    <strong>Filter by Sale:</strong>{" "}
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="saleFilter"
+                            value="true"
+                            onChange={handleSaleChange}
+                        />
+                        For Sale
+                    </label>{" "}
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="saleFilter"
+                            value="false"
+                            onChange={handleSaleChange}
+                        />
+                        To Buy
+                    </label>{" "}
+                    <br />
+                    <button onClick={handleFilterSubmit}>Filter</button>
+                    <button onClick={handleClearFilterSubmit}>
+                        Clear Filters
                     </button>
                 </div>
                 {filteredAdverts.length ? (
@@ -71,7 +126,7 @@ const AdvertsPage = () => {
                                         <br />
                                         buy or sell:
                                     </b>
-                                    {advert.sale ? "buying" : "selling"}
+                                    {advert.sale ? " for sale" : " to buy"}
                                     <b>
                                         <br />
                                         tags:

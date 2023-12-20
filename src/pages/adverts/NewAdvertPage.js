@@ -103,9 +103,8 @@ function NewAdvertPage() {
                         <label>
                             <input
                                 type="radio"
-                                name="sale"
-                                value="true"
-                                checked={sale === true}
+                                name="false"
+                                value="false"
                                 onChange={handleSaleChange}
                             />
                             To Buy
@@ -113,12 +112,11 @@ function NewAdvertPage() {
                         <label>
                             <input
                                 type="radio"
-                                name="sale"
-                                value="false"
-                                checked={sale === false}
+                                name="true"
+                                value="true"
                                 onChange={handleSaleChange}
                             />
-                            To Sell
+                            For Sale
                         </label>
                     </div>
                     <br />

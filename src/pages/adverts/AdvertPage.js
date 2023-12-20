@@ -46,7 +46,7 @@ const AdvertPage = () => {
                             <h3>{advert.name}</h3>
                             <b>price:</b> {advert.price}€<br />
                             <b>buy or sell:</b>{" "}
-                            {advert.sale ? "buying" : "selling"}
+                            {advert.sale ? "For sale" : "To buy"}
                             <br />
                             <b>tags:</b>
                             {advert.tags.map((tag, index) => (
