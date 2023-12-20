@@ -21,7 +21,10 @@ const AdvertsPage = () => {
             const queryParams = new URLSearchParams(location.search);
             const tagFromQuery = queryParams.get("tags");
             const saleFromQuery = queryParams.get("sale");
-            const fetchedAdverts = await getAdverts({ tags: tagFromQuery });
+            const fetchedAdverts = await getAdverts({
+                tags: tagFromQuery,
+                sale: saleFromQuery,
+            });
             const fetchedTags = await getTags();
             setAdverts(fetchedAdverts);
             setTags(fetchedTags);
@@ -37,7 +40,8 @@ const AdvertsPage = () => {
     };
 
     const handleSaleChange = event => {
-        const newValue = event.target.checked ? event.target.value : null;
+        const newValue =
+            event.target.value === "" ? null : event.target.value === "true";
         setSelectedSale(newValue);
     };
 
@@ -48,11 +52,13 @@ const AdvertsPage = () => {
         }
 
         if (selectedSale !== null) {
-            queryParams.sale = selectedSale;
+            queryParams.sale = selectedSale.toString();
         }
 
         // Se actualiza la URL con la nueva query de filtrado
         const queryString = new URLSearchParams(queryParams).toString();
+        console.log("Query Params:", queryParams);
+
         navigate(`/adverts?${queryString}`);
 
         // Filtrar anuncios basados en 'tags' y 'sale'
@@ -92,24 +98,19 @@ const AdvertsPage = () => {
                     ))}
                     <br />
                     <strong>Filter by Sale:</strong>{" "}
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="saleFilter"
-                            value="true"
-                            onChange={handleSaleChange}
-                        />
-                        For Sale
-                    </label>{" "}
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="saleFilter"
-                            value="false"
-                            onChange={handleSaleChange}
-                        />
-                        To Buy
-                    </label>{" "}
+                    <select
+                        name="saleFilter"
+                        value={
+                            selectedSale === null ? "" : selectedSale.toString()
+                        }
+                        onChange={handleSaleChange}
+                    >
+                        <option value="" defaultChecked>
+                            Choose an option
+                        </option>
+                        <option value="true">For Sale</option>
+                        <option value="false">To Buy</option>
+                    </select>{" "}
                     <br />
                     <button onClick={handleFilterSubmit}>Filter</button>
                     <button onClick={handleClearFilterSubmit}>
