@@ -43,6 +43,7 @@ function LoginPage() {
 
     const [rememberUser, setRememberUser] = useState(false);
     const { email, password } = credentials;
+    const buttonDisabled = !(email && password);
 
     return (
         <Layout>
@@ -78,6 +79,7 @@ function LoginPage() {
                         type="submit"
                         $variant="primary"
                         className="sessionForm-submit"
+                        disabled={buttonDisabled}
                     >
                         Log in
                     </Button>

@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     padding: 10px 0;
     overflow: hidden;
     gap: 20px;
@@ -27,6 +27,28 @@
     width: 100%;
 }
 
-.advertsFilters > label {
+.advertsFilters {
+    background-color: rgb(245, 245, 245);
+    padding: 30px 20px;
+    border-radius: 20px;
+}
+
+.advertsFiltersInputs {
+    display: grid;
+}
+
+.advertsFiltersInputs > label {
     margin-right: 10px;
+}
+
+.advertsFiltersInputs > select {
+    max-width: 200px;
+}
+
+.advertsFiltersButtons {
+    margin-top: 20px;
+}
+
+.advertsFiltersButtons > button {
+    margin-right: 5px;
 }

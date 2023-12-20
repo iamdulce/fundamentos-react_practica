@@ -9,6 +9,7 @@ function NewAdvertPage() {
     const [sale, setSale] = useState(true);
     const [price, setPrice] = useState(0);
     const [tags, setTags] = useState([]);
+    const [selectedTag, setSelectedTag] = useState(null);
     const [photo, setPhoto] = useState(null);
 
     useEffect(() => {
@@ -34,11 +35,7 @@ function NewAdvertPage() {
     };
 
     const handleTagsChange = event => {
-        const selectedOptions = Array.from(
-            event.target.selectedOptions,
-            option => option.value
-        );
-        setTags(selectedOptions);
+        setSelectedTag(event.target.value);
     };
 
     const handlePhotoChange = event => {
@@ -56,19 +53,20 @@ function NewAdvertPage() {
         formData.append("name", name);
         formData.append("sale", sale);
         formData.append("price", price);
-        tags.forEach(tag => formData.append("tags", tag));
+        formData.append("tags", selectedTag);
         if (photo) {
             formData.append("photo", photo);
         }
 
         try {
             const advert = await createAdvert(formData);
-
             navigate("/adverts/" + advert.id);
         } catch (error) {
             console.error("Error creating the ad: ", error);
         }
     };
+
+    const buttonDisabled = !(name && price);
 
     return (
         <Layout title="Create your add">
@@ -103,7 +101,7 @@ function NewAdvertPage() {
                         <label>
                             <input
                                 type="radio"
-                                name="false"
+                                name="sale"
                                 value="false"
                                 onChange={handleSaleChange}
                             />
@@ -112,7 +110,7 @@ function NewAdvertPage() {
                         <label>
                             <input
                                 type="radio"
-                                name="true"
+                                name="sale"
                                 value="true"
                                 onChange={handleSaleChange}
                             />
@@ -122,20 +120,21 @@ function NewAdvertPage() {
                     <br />
                     <br />
 
-                    <label htmlFor="tags-select">Choose a tag:</label>
-                    <select
-                        multiple
-                        id="tags-select"
-                        value={tags}
-                        onChange={handleTagsChange}
-                        required
-                    >
+                    <label htmlFor="tags">Choose a tag:</label>
+                    <div id="tags" onChange={handleTagsChange} required>
                         {tags.map(tag => (
-                            <option key={tag} value={tag}>
+                            <label key={tag}>
+                                <input
+                                    type="radio"
+                                    name="tags"
+                                    value={tag}
+                                    checked={selectedTag === tag}
+                                    onChange={handleTagsChange}
+                                />
                                 {tag}
-                            </option>
+                            </label>
                         ))}
-                    </select>
+                    </div>
                     <br />
                     <br />
 
@@ -150,7 +149,11 @@ function NewAdvertPage() {
                     <br />
                     <br />
 
-                    <Button $variant="primary" type="submit">
+                    <Button
+                        $variant="primary"
+                        disabled={buttonDisabled}
+                        type="submit"
+                    >
                         Create ad
                     </Button>
                 </form>

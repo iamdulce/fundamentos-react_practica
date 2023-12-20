@@ -39,6 +39,7 @@ function SignupPage() {
     };
 
     const { email, password, username, name } = credentials;
+    const buttonDisabled = !(email && password && username && name);
 
     return (
         <Layout>
@@ -81,6 +82,7 @@ function SignupPage() {
                         type="submit"
                         $variant="primary"
                         className="sessionForm-submit"
+                        disabled={buttonDisabled}
                     >
                         Sign up
                     </Button>

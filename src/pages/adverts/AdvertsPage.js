@@ -61,7 +61,7 @@ const AdvertsPage = () => {
 
         navigate(`/adverts?${queryString}`);
 
-        // Filtrar anuncios basados en 'tags' y 'sale'
+        // Filtrar anuncios segúnn 'tags' y/o 'sale'
         const newFilteredAdverts = adverts.filter(
             advert =>
                 (!selectedTag || advert.tags.includes(selectedTag)) && // Filtrar por 'tags'
@@ -80,42 +80,47 @@ const AdvertsPage = () => {
     };
 
     return (
-        <Layout title="Latest adds">
+        <Layout title="Latest ads">
             <div className="advertsPage">
                 <div className="advertsFilters">
-                    <strong>Filter by Tag:</strong>{" "}
-                    {tags.map((tag, index) => (
-                        <label key={index}>
-                            <input
-                                type="radio"
-                                name="tagFilter"
-                                value={tag}
-                                checked={selectedTag === tag}
-                                onChange={handleTagChange}
-                            />
-                            {tag}
-                        </label>
-                    ))}
-                    <br />
-                    <strong>Filter by Sale:</strong>{" "}
-                    <select
-                        name="saleFilter"
-                        value={
-                            selectedSale === null ? "" : selectedSale.toString()
-                        }
-                        onChange={handleSaleChange}
-                    >
-                        <option value="" defaultChecked>
-                            Choose an option
-                        </option>
-                        <option value="true">For Sale</option>
-                        <option value="false">To Buy</option>
-                    </select>{" "}
-                    <br />
-                    <button onClick={handleFilterSubmit}>Filter</button>
-                    <button onClick={handleClearFilterSubmit}>
-                        Clear Filters
-                    </button>
+                    <div className="advertsFiltersInputs">
+                        <strong>Filter by Tag:</strong>{" "}
+                        {tags.map((tag, index) => (
+                            <label key={index}>
+                                <input
+                                    type="radio"
+                                    name="tagFilter"
+                                    value={tag}
+                                    checked={selectedTag === tag}
+                                    onChange={handleTagChange}
+                                />
+                                {tag}
+                            </label>
+                        ))}
+                        <br />
+                        <strong>Filter by Sale:</strong>{" "}
+                        <select
+                            name="saleFilter"
+                            value={
+                                selectedSale === null
+                                    ? ""
+                                    : selectedSale.toString()
+                            }
+                            onChange={handleSaleChange}
+                        >
+                            <option value="" defaultChecked>
+                                Choose an option
+                            </option>
+                            <option value="true">For Sale</option>
+                            <option value="false">To Buy</option>
+                        </select>{" "}
+                    </div>
+                    <div className="advertsFiltersButtons">
+                        <Button onClick={handleFilterSubmit}>Filter</Button>
+                        <Button onClick={handleClearFilterSubmit}>
+                            Clear Filters
+                        </Button>
+                    </div>
                 </div>
                 {filteredAdverts.length ? (
                     <ul className="advertsList">

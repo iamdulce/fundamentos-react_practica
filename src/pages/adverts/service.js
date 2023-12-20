@@ -7,10 +7,6 @@ export const getTags = () => {
     return client.get(url);
 };
 
-// export const getAdverts = () => {
-//     return client.get(advertsURL);
-// };
-
 export const getAdverts = queryParams => {
     return client.get(advertsURL, { params: queryParams });
 };
