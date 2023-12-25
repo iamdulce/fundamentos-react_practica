@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getAdvertDetail, deleteAdvert } from "./service";
 import Button from "../../components/shared/Button";
 import "./styles/AdvertPage.css";
+import Modal from "../../components/shared/Modal";
 
 const AdvertPage = () => {
     const navigate = useNavigate();
@@ -11,6 +12,7 @@ const AdvertPage = () => {
     const params = useParams();
     //Hago llamada a api
     const [advert, setAdvert] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         getAdvertDetail(params.advertId)
@@ -22,14 +24,24 @@ const AdvertPage = () => {
             });
     }, [navigate, params.advertId]);
 
-    async function handleDeleteAdd() {
+    const handleDeleteAdd = () => {
+        setShowModal(true);
+    };
+
+    const handleConfirmDelete = async () => {
         try {
             await deleteAdvert(params.advertId);
             navigate("/adverts");
         } catch (err) {
             console.error(err);
+        } finally {
+            setShowModal(false);
         }
-    }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     const defaultImg = require("../../assets/no-img.png");
 
@@ -63,6 +75,11 @@ const AdvertPage = () => {
                         Delete ad
                     </Button>
                 </div>
+                <Modal
+                    show={showModal}
+                    onConfirm={handleConfirmDelete}
+                    onClose={handleCloseModal}
+                />
             </div>
         </Layout>
     );
