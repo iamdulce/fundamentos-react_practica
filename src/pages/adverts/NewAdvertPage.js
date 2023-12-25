@@ -67,7 +67,7 @@ function NewAdvertPage() {
         }
     };
 
-    const buttonDisabled = !(name && price);
+    const buttonDisabled = !(name && price && tags && sale);
 
     return (
         <Layout title="Create your add">
@@ -106,6 +106,7 @@ function NewAdvertPage() {
                                     name="sale"
                                     value="false"
                                     onChange={handleSaleChange}
+                                    required
                                 />
                                 To Buy
                             </label>

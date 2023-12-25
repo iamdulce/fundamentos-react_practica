@@ -50,42 +50,6 @@ const AdvertsPage = () => {
         fetchAdvertsAndFilters();
     }, [isLogged, location.search]);
 
-    // useEffect(() => {
-    //     const fetchAdvertsAndFilters = async () => {
-    //         const queryParams = new URLSearchParams(location.search);
-    //         const tagFromQuery = queryParams.get("tags");
-    //         const saleFromQuery = queryParams.get("sale");
-
-    //         // Check if the user is logged in
-    //         if (isLogged) {
-    //             try {
-    //                 const fetchedAdverts = await getAdverts({
-    //                     tags: tagFromQuery,
-    //                     sale: saleFromQuery,
-    //                 });
-    //                 setAdverts(fetchedAdverts);
-    //                 setFilteredAdverts(fetchedAdverts);
-    //             } catch (error) {
-    //                 // Handle error (e.g., show a message to the user)
-    //                 console.error("Error fetching adverts:", error);
-    //                 setAdverts([]);
-    //                 setFilteredAdverts([]);
-    //             }
-    //         } else {
-    //             // User is not logged in, handle accordingly
-    //             setAdverts([]);
-    //             setFilteredAdverts([]);
-    //         }
-
-    //         const fetchedTags = await getTags();
-    //         setTags(fetchedTags);
-    //         setSelectedTag(tagFromQuery);
-    //         setSelectedSale(saleFromQuery);
-    //     };
-
-    //     fetchAdvertsAndFilters();
-    // }, [isLogged, location.search]);
-
     const handleTagChange = event => {
         setSelectedTag(event.target.value);
     };
