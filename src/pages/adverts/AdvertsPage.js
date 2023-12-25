@@ -4,10 +4,13 @@ import { getAdverts, getTags } from "./service";
 import Button from "../../components/shared/Button";
 import { Link } from "react-router-dom";
 import "./styles/AdvertsPage.css";
+import { useAuth } from "../auth/context";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AdvertsPage = () => {
+    const { isLogged } = useAuth();
+
     const [adverts, setAdverts] = useState([]);
     const [tags, setTags] = useState([]);
     const [selectedTag, setSelectedTag] = useState(null);
@@ -22,20 +25,66 @@ const AdvertsPage = () => {
             const tagFromQuery = queryParams.get("tags");
             const saleFromQuery = queryParams.get("sale");
 
-            const fetchedAdverts = await getAdverts({
-                tags: tagFromQuery,
-                sale: saleFromQuery,
-            });
+            if (isLogged) {
+                try {
+                    const fetchedAdverts = await getAdverts({
+                        tags: tagFromQuery,
+                        sale: saleFromQuery,
+                    });
+                    setAdverts(fetchedAdverts);
+                    setFilteredAdverts(fetchedAdverts);
+                } catch (error) {
+                    console.error("Error fetching adverts:", error);
+                    setAdverts([]);
+                    setFilteredAdverts([]);
+                }
+            } else {
+                setAdverts([]);
+                setFilteredAdverts([]);
+            }
             const fetchedTags = await getTags();
-
-            setAdverts(fetchedAdverts);
             setTags(fetchedTags);
             setSelectedTag(tagFromQuery);
             setSelectedSale(saleFromQuery);
-            setFilteredAdverts(fetchedAdverts);
         };
         fetchAdvertsAndFilters();
-    }, [location.search]);
+    }, [isLogged, location.search]);
+
+    // useEffect(() => {
+    //     const fetchAdvertsAndFilters = async () => {
+    //         const queryParams = new URLSearchParams(location.search);
+    //         const tagFromQuery = queryParams.get("tags");
+    //         const saleFromQuery = queryParams.get("sale");
+
+    //         // Check if the user is logged in
+    //         if (isLogged) {
+    //             try {
+    //                 const fetchedAdverts = await getAdverts({
+    //                     tags: tagFromQuery,
+    //                     sale: saleFromQuery,
+    //                 });
+    //                 setAdverts(fetchedAdverts);
+    //                 setFilteredAdverts(fetchedAdverts);
+    //             } catch (error) {
+    //                 // Handle error (e.g., show a message to the user)
+    //                 console.error("Error fetching adverts:", error);
+    //                 setAdverts([]);
+    //                 setFilteredAdverts([]);
+    //             }
+    //         } else {
+    //             // User is not logged in, handle accordingly
+    //             setAdverts([]);
+    //             setFilteredAdverts([]);
+    //         }
+
+    //         const fetchedTags = await getTags();
+    //         setTags(fetchedTags);
+    //         setSelectedTag(tagFromQuery);
+    //         setSelectedSale(saleFromQuery);
+    //     };
+
+    //     fetchAdvertsAndFilters();
+    // }, [isLogged, location.search]);
 
     const handleTagChange = event => {
         setSelectedTag(event.target.value);
