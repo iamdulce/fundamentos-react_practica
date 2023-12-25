@@ -49,7 +49,7 @@ function LoginPage() {
         <Layout>
             <div className="sessionPage">
                 <h1 className="sessionPage-title">Log In</h1>
-                <form onSubmit={handleSubmit}>
+                <form className="sessionForm" onSubmit={handleSubmit}>
                     <FormInput
                         type="text"
                         name="email"
@@ -68,6 +68,7 @@ function LoginPage() {
                         value={password}
                     />
                     <input
+                        className="rememberCheck"
                         label="Remeber me"
                         type="checkbox"
                         name="rememberUser"

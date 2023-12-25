@@ -32,3 +32,12 @@
     margin-top: 10px;
     width: 100%;
 }
+
+.rememberCheck {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.sessionForm span {
+    margin-left: 5px;
+}

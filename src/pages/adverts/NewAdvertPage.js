@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createAdvert, getTags } from "./service";
 import Button from "../../components/shared/Button";
+import "./styles/NewAdvertPage.css";
 
 function NewAdvertPage() {
     const [name, setName] = useState("");
@@ -70,84 +71,87 @@ function NewAdvertPage() {
 
     return (
         <Layout title="Create your add">
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="nombre">Name:</label>
-                    <input
-                        value={name}
-                        onChange={handleNameChange}
-                        type="text"
-                        id="nombre"
-                        name="nombre"
-                        required
-                    />
-                    <br />
-                    <br />
-
-                    <label htmlFor="price">Price:</label>
-                    <input
-                        value={price}
-                        onChange={handlePriceChange}
-                        type="number"
-                        id="price"
-                        name="price"
-                        required
-                    />
-                    <br />
-                    <br />
-
-                    <label htmlFor="sale">Type of product</label>
+            <div className="newAdvertContainer">
+                <form onSubmit={handleSubmit} className="newAdvertForm">
                     <div>
-                        <label>
-                            <input
-                                type="radio"
-                                name="sale"
-                                value="false"
-                                onChange={handleSaleChange}
-                            />
-                            To Buy
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="sale"
-                                value="true"
-                                onChange={handleSaleChange}
-                            />
-                            For Sale
-                        </label>
+                        <label htmlFor="nombre">Name:</label>
+                        <input
+                            value={name}
+                            onChange={handleNameChange}
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            required
+                        />
                     </div>
-                    <br />
-                    <br />
 
-                    <label htmlFor="tags">Choose a tag:</label>
-                    <div id="tags" onChange={handleTagsChange} required>
-                        {tags.map(tag => (
-                            <label key={tag}>
+                    <div>
+                        <label htmlFor="price">Price:</label>
+                        <input
+                            value={price}
+                            onChange={handlePriceChange}
+                            type="number"
+                            id="price"
+                            name="price"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="sale">Type of product</label>
+                        <div>
+                            <label>
                                 <input
                                     type="radio"
-                                    name="tags"
-                                    value={tag}
-                                    checked={selectedTag === tag}
-                                    onChange={handleTagsChange}
+                                    name="sale"
+                                    value="false"
+                                    onChange={handleSaleChange}
                                 />
-                                {tag}
+                                To Buy
                             </label>
-                        ))}
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="sale"
+                                    value="true"
+                                    onChange={handleSaleChange}
+                                />
+                                For Sale
+                            </label>
+                        </div>
                     </div>
-                    <br />
-                    <br />
 
-                    <label htmlFor="photo">Add a photo of your advert:</label>
-                    <br />
-                    <input
-                        type="file"
-                        id="photo"
-                        name="photo"
-                        onChange={handlePhotoChange}
-                    />
-                    <br />
-                    <br />
+                    <div>
+                        <label htmlFor="tags">Choose a tag:</label>
+                        <div id="tags" onChange={handleTagsChange} required>
+                            {tags.map(tag => (
+                                <label key={tag}>
+                                    <input
+                                        type="radio"
+                                        name="tags"
+                                        value={tag}
+                                        checked={selectedTag === tag}
+                                        onChange={handleTagsChange}
+                                        required
+                                    />
+                                    {tag}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div>
+                        <label htmlFor="photo">
+                            Add a photo of your advert:
+                        </label>
+                        <br />
+                        <input
+                            type="file"
+                            id="photo"
+                            name="photo"
+                            onChange={handlePhotoChange}
+                        />
+                    </div>
 
                     <Button
                         $variant="primary"

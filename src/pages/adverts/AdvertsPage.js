@@ -21,11 +21,13 @@ const AdvertsPage = () => {
             const queryParams = new URLSearchParams(location.search);
             const tagFromQuery = queryParams.get("tags");
             const saleFromQuery = queryParams.get("sale");
+
             const fetchedAdverts = await getAdverts({
                 tags: tagFromQuery,
                 sale: saleFromQuery,
             });
             const fetchedTags = await getTags();
+
             setAdverts(fetchedAdverts);
             setTags(fetchedTags);
             setSelectedTag(tagFromQuery);

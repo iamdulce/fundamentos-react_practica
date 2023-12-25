@@ -16,7 +16,7 @@ const AdvertPage = () => {
         getAdvertDetail(params.advertId)
             .then(advert => setAdvert(advert))
             .catch(error => {
-                if (error.status === 404) {
+                if (error.response.status === 404) {
                     navigate("/404");
                 }
             });
@@ -31,6 +31,8 @@ const AdvertPage = () => {
         }
     }
 
+    const defaultImg = require("../../assets/no-img.png");
+
     return (
         <Layout title="Advert details">
             <div className="advertContainer">
@@ -38,7 +40,7 @@ const AdvertPage = () => {
                     {advert && (
                         <div>
                             <img
-                                src={advert.photo}
+                                src={advert.photo || defaultImg}
                                 alt={advert.name}
                                 width={400}
                             />
