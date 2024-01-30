@@ -12,8 +12,22 @@ function App() {
         <Routes>
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/adverts" element={<AdvertsPage />} />
-            <Route path="/adverts/:advertId" element={<AdvertPage />} />
+            <Route
+                path="/adverts"
+                element={
+                    <RequireAuth>
+                        <AdvertsPage />
+                    </RequireAuth>
+                }
+            />
+            <Route
+                path="/adverts/:advertId"
+                element={
+                    <RequireAuth>
+                        <AdvertPage />
+                    </RequireAuth>
+                }
+            />
             <Route
                 path="/adverts/new"
                 element={

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "./context";
+// import { useAuth } from "./context";
 import { login } from "./service";
 import { useState } from "react";
 import Button from "../../components/shared/Button";
@@ -7,9 +7,12 @@ import FormInput from "../../components/shared/FormInput";
 import "./styles/SessionPages.css";
 import { NavLink } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
+import { useDispatch } from "react-redux";
+import { authLogin } from "../../store/actions";
 
 function LoginPage() {
-    const { onLogin } = useAuth();
+    const dispatch = useDispatch();
+    // const { onLogin } = useAuth();
 
     const [credentials, setCredentials] = useState({
         email: "",
@@ -19,6 +22,10 @@ function LoginPage() {
 
     const location = useLocation();
     const navigate = useNavigate();
+
+    const onLogin = () => {
+        dispatch(authLogin());
+    };
 
     const handleSubmit = async event => {
         event.preventDefault();
