@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-// import { useAuth } from "./context";
+// import { useAuthHandlers } from "./context";
 import { login } from "./service";
 import { useState } from "react";
 import Button from "../../components/shared/Button";
@@ -12,7 +12,8 @@ import { authLogin } from "../../store/actions";
 
 function LoginPage() {
     const dispatch = useDispatch();
-    // const { onLogin } = useAuth();
+
+    // const { onLogin } = useAuthHandlers();
 
     const [credentials, setCredentials] = useState({
         email: "",

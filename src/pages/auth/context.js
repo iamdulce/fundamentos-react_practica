@@ -1,11 +1,19 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useMemo } from "react";
 
-//Se crea el contexto
+// Contexto de isLogged
 const AuthContext = createContext(false);
+// Contexto para el handler
+const AuthContextHandlers = createContext(undefined);
 
-//Se crea un custom hook para no tener que llamar AuthContext en cada componente
-export const useAuth = () => {
-    const auth = useContext(AuthContext);
+// Custom hook para isLogged
+export const useIsLogged = () => {
+    const isLogged = useContext(AuthContext);
+    return isLogged;
+};
+
+// Custom hook para el handler
+export const useAuthHandlers = () => {
+    const auth = useContext(AuthContextHandlers);
     return auth;
 };
 
@@ -13,18 +21,20 @@ export const useAuth = () => {
 export const AuthContextProvider = ({ initiallyLogged, children }) => {
     const [isLogged, setIsLogged] = useState(initiallyLogged);
 
-    const handleLogin = () => setIsLogged(true);
-    const handleLogout = () => setIsLogged(false);
-
-    const authValue = {
-        isLogged,
-        onLogout: handleLogout,
-        onLogin: handleLogin,
-    };
+    //Memoización del los objetos handlers
+    const authHandlers = useMemo(
+        () => ({
+            onLogin: () => setIsLogged(true),
+            onLogout: () => setIsLogged(false),
+        }),
+        []
+    );
 
     return (
-        <AuthContext.Provider value={authValue}>
-            {children}
-        </AuthContext.Provider>
+        <AuthContextHandlers.Provider value={authHandlers}>
+            <AuthContext.Provider value={isLogged}>
+                {children}
+            </AuthContext.Provider>
+        </AuthContextHandlers.Provider>
     );
 };

@@ -4,12 +4,11 @@ import { getAdverts, getTags } from "./service";
 import Button from "../../components/shared/Button";
 import { Link } from "react-router-dom";
 import "./styles/AdvertsPage.css";
-import { useAuth } from "../auth/context";
-
+import { useIsLogged } from "../auth/context";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AdvertsPage = () => {
-    const { isLogged } = useAuth();
+    const isLogged = useIsLogged();
 
     const [adverts, setAdverts] = useState([]);
     const [tags, setTags] = useState([]);

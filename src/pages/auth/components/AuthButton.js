@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import Button from "../../../components/shared/Button";
-// import { useAuth } from "../context";
+// import { useIsLogged, useAuthHandlers } from "../context";
 import { logout } from "../service";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authLogout } from "../../../store/actions";
 
 function AuthButton({ className }) {
-    // const { isLogged, onLogout } = useAuth();
+    const isLogged = useSelector(state => state.auth);
+
     const dispatch = useDispatch();
 
     const onLogout = () => {
